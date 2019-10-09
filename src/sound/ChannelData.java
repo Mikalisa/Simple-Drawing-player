@@ -11,6 +11,10 @@ public class ChannelData {
     private int bend;
     private int reverb;
     private int num;
+    private int organ;
+    private int Reed;
+    private int guitar;
+
 
     // getters
     public MidiChannel getChannel() { return channel; }
@@ -22,6 +26,10 @@ public class ChannelData {
         pressure = 64;
         bend = 64;
         reverb = 64;
+        organ = 18;
+        Reed = 65;
+        guitar = 25;
+
     }
 }
 

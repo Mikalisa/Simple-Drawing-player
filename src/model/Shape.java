@@ -6,19 +6,19 @@ import sound.MidiSynth;
 import java.awt.*;
 
 
-public class Shape {
-    private static Color PLAYING_COLOR;
+public abstract class Shape {
+    protected static Color PLAYING_COLOR;
 
-    private int x;
-    private int y;
-    private int width;
-    private int height;
+    protected int x;
+    protected int y;
+    protected int width;
+    protected int height;
 
-    private boolean selected;
+    protected boolean selected;
 
-    private MidiSynth midiSynth;
-    private int instrument;
-    private int playLineCoord;
+    protected  MidiSynth midiSynth;
+    protected int instrument;
+    protected int playLineCoord;
 
 
     public Shape(Point topLeft, MidiSynth midiSynth) {
@@ -56,13 +56,9 @@ public class Shape {
         return (this.y <= y) && (y <= this.y + height);
     }
 
-    // EFFECTS: return true if the given Point (x,y) is contained within the bounds of this Shape
-    public boolean contains(Point point) {
-        int point_x = point.x;
-        int point_y = point.y;
 
-        return containsX(point_x) && containsY(point_y);
-    }
+    // EFFECTS: return true if the given Point (x,y) is contained within the bounds of this Shape
+    public abstract boolean contains(Point point);
 
     // REQUIRES: the x,y coordinates of the Point are larger than the x,y coordinates of the shape
     // MODIFIES: this
@@ -74,23 +70,7 @@ public class Shape {
 
     // EFFECTS: draws this Shape on the SimpleDrawingPlayer, if the shape is selected, Shape is filled in
     //          else, Shape is unfilled (white)
-    public void draw(Graphics g) {
-        Color save = g.getColor();
-        if (selected) {
-            g.setColor(PLAYING_COLOR);
-        } else {
-            g.setColor(Color.white);
-        }
-        fillGraphics(g);
-        g.setColor(save);
-        drawGraphics(g);
-
-        if (playLineCoord > 0 && playLineCoord < width) {
-            g.setColor(Color.red);
-            g.drawLine(x + playLineCoord, y, x + playLineCoord, y + height);
-            g.setColor(save);
-        }
-    }
+    public abstract void draw(Graphics g);
 
 
 
@@ -130,12 +110,12 @@ public class Shape {
 
     //EFFECTS: draws the shape
     private void drawGraphics(Graphics g) {
-        g.drawRect(x, y, width, height);
+        g.drawOval(x, y, width, height);
     }
 
     //EFFECTS: fills the shape
     private void fillGraphics(Graphics g) {
-        g.fillRect(x, y, width, height);
+        g.fillOval(x, y, width, height);
     }
 
 
